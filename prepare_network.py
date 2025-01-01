@@ -118,7 +118,7 @@ class CLEncoder(nn.Module):
         """
         batch_size = x.shape[0]
         #nsamples = x.shape[2]
-        nviews = x.shape[3]
+        nviews = x.shape[-1]
         latent_embeddings = torch.empty(batch_size,self.embedding_dim,nviews,device=x.device)
         for n in range(nviews):       
             """ Obtain Inputs From Each View """
