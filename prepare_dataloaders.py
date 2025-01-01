@@ -72,7 +72,7 @@ def load_data(dataset_name, trial='CMSC'):
     
     
     
-def load_chapman(root='../MCP/data/chapman', split=None):
+def load_chapman(root='../MCP/chapman', split=None):
     data_path = os.path.join(root, 'feature')
     label_path = os.path.join(root, 'label', 'label.npy')
     
