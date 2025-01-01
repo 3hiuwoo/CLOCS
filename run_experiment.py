@@ -25,13 +25,13 @@ def train_model(basepath_to_data,cnn_network_contrastive,second_cnn_network,clas
     metrics_dict = dict()
     patient_rep_dict = dict()
     if 'test' not in phases:
-        phases = ['train1','val']
-        inferences = [False,False]
+        phases = ['train1']
+        inferences = [False]
     else:
         inferences = [False]
     
     stop_counter = 0
-    patience = 15 #for early stopping criterion
+    patience = 100 #for early stopping criterion
     epoch_count = 0
     
     """ Added April 24th, 2020 """
@@ -53,7 +53,7 @@ def train_model(basepath_to_data,cnn_network_contrastive,second_cnn_network,clas
     #total_labelled_samples = len(dataloaders_list['train1'].batch_sampler.sampler.data_source.label_array)
     
     while stop_counter <= patience and epoch_count < num_epochs:
-        if 'train' in phases or 'val' in phases:
+        if 'train1' in phases or 'val' in phases:
             print('-' * 10)
             print('Epoch %i/%i' % (epoch_count,num_epochs-1))
             print('-' * 10)
@@ -95,19 +95,22 @@ def train_model(basepath_to_data,cnn_network_contrastive,second_cnn_network,clas
                 metrics_dict = track_metrics(metrics_dict,results_dictionary,phase,epoch_count)                
 
         epoch_count += 1
+        if (epoch_count % 10 == 0) and ('train1' in phases):
+            save_config_weights(save_path_dir,model.state_dict(),saved_weights,phases,trial_to_run,downstream_dataset)
+            
         if 'train1' not in phases:
             break #from while loop
         elif 'train1' in phases and 'obtain_representation' in downstream_task:
             break
-            
+   
     #print('Best Val Loss: %.4f.' % best_loss)
-    if 'train1' in phases:
-        prefix = 'train_val'
-        save_metrics(save_path_dir,prefix,metrics_dict)
-        model.load_state_dict(best_model_wts)
-    elif 'val' in phases:
-        prefix = 'val'
-        save_metrics(save_path_dir,prefix,metrics_dict)
-    elif 'test' in phases:
-        prefix = 'test'
-        save_metrics(save_path_dir,prefix,metrics_dict)
+    # if 'train1' in phases:
+    #     prefix = 'train_val'
+    #     save_metrics(save_path_dir,prefix,metrics_dict)
+    #     model.load_state_dict(best_model_wts)
+    # elif 'val' in phases:
+    #     prefix = 'val'
+    #     save_metrics(save_path_dir,prefix,metrics_dict)
+    # elif 'test' in phases:
+    #     prefix = 'test'
+    #     save_metrics(save_path_dir,prefix,metrics_dict)

@@ -17,12 +17,13 @@ import os
 """
 
 #%%
-def load_initial_model_contrastive(cnn_network,phases,save_path_dir,saved_weights,held_out_lr,nencoders,embedding_dim,trial_to_run,task,dataset_name,second_network='',classification=''):
+def load_initial_model_contrastive(encoder,phases,save_path_dir,saved_weights,held_out_lr,nencoders,embedding_dim,trial_to_run,task,dataset_name,second_network='',classification=''):
     """ Load models with maml weights """
-    dropout_type = 'drop1d' #options: | 'drop1d' | 'drop2d'
-    p1,p2,p3 = 0.1,0.1,0.1 #initial dropout probabilities #0.2, 0, 0
+    # dropout_type = 'drop1d' #options: | 'drop1d' | 'drop2d'
+    # p1,p2,p3 = 0.1,0.1,0.1 #initial dropout probabilities #0.2, 0, 0
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')   
-    model = cnn_network(dropout_type,p1,p2,p3,nencoders=nencoders,embedding_dim=embedding_dim,trial=trial_to_run,device=device)
+    # model = cnn_network(dropout_type,p1,p2,p3,nencoders=nencoders,embedding_dim=embedding_dim,trial=trial_to_run,device=device)
+    model = encoder(embedding_dim=embedding_dim)
     print(device)
     """ Inference Without Meta Learning """
     if trial_to_run in ['Linear','Fine-Tuning','Random']:
@@ -60,7 +61,7 @@ def load_initial_model_contrastive(cnn_network,phases,save_path_dir,saved_weight
     
     model.to(device)
     #print(next(model.parameters()).is_cuda)
-    optimizer = optim.Adam(list(model.parameters()),lr=held_out_lr,weight_decay=0) #shouldn't load this again - will lose running average of gradients and so forth
+    optimizer = optim.AdamW(list(model.parameters()),lr=held_out_lr,weight_decay=0) #shouldn't load this again - will lose running average of gradients and so forth
 
     return model,optimizer,device
 

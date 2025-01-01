@@ -30,11 +30,13 @@ def contrastive_single(phase,inference,dataloaders,model,optimizer,device,weight
     pids_list = []
     batch_num = 0
     batch = 0
-    for inputs,labels,pids,modality,task_names,indices in tqdm(dataloaders[phase]):
+    # for inputs,labels,pids,modality,task_names,indices in tqdm(dataloaders[phase]):
+    for inputs, y in tqdm(dataloaders[phase]):
         batch += 1
         """ Send Data to Device """
         inputs = inputs.to(device)
-        labels = labels.to(device)
+        labels = y[:, 0].to(device)
+        pids = y[:, 1].detach().numpy()
         
         with torch.set_grad_enabled('train1' in phase):# and inference == False): #('train' in phase and inference == False)
             outputs = model(inputs) #(BxHx2) in CPPC, (BxHx12) in CMLC, (BxHx24) in CMSMLC
