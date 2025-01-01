@@ -40,6 +40,7 @@ def load_initial_data_contrastive(basepath_to_data,phases,fraction,inferences,ba
     # dataset = {phase:my_dataset_contrastive(basepath_to_data,dataset_name,phase,inference,fractions,acquired_items,modalities=modalities,task=downstream_task,input_perturbed=input_perturbed,perturbation=perturbation,leads=leads,class_pair=class_pair,trial=trial,nviews=nviews) for phase,inference in zip(phases,inferences)}                                        
     
     X_train, _, _, y_train, _, _ = load_data(dataset_name, trial=trial)
+    assert len(phases) == 1
     dataset = {phase: TensorDataset(torch.tensor(X_train, dtype=torch.float32), torch.tensor(y_train, dtype=torch.long)) for phase in phases}
     
     
@@ -59,11 +60,14 @@ def load_data(dataset_name, trial='CMSC'):
             nviews = X_train.shape[1]
             
         if trial == 'CMSMLC':
-            X_train = X_train.transpose(0, 3, 1, 2).reshape(X_train.shape[0], -1, 900, 1)
+            X_train = X_train.transpose(0, 3, 1, 2).reshape(X_train.shape[0], -1, 900, 1).squeeze(-1).transpose(0, 2, 1)
             
         elif trial == 'CMSC':
-            X_train = X_train.transpose(0, 3, 1, 2).reshape(-1, nviews, 900, 1)
+            X_train = X_train.transpose(0, 3, 1, 2).reshape(-1, nviews, 900, 1).squeeze(-1).transpose(0, 2, 1)
             y_train = y_train.repeat(X_train.shape[0]/y_train.shape[0], 0)
+            
+        else:
+            raise ValueError('Trial not supported!')
     else:
         raise ValueError('Dataset not found!')
         
