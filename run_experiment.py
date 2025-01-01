@@ -8,6 +8,7 @@ Created on Sat May 16 23:28:57 2020
 
 import numpy as np
 import copy
+import os
 
 from prepare_miscellaneous import obtain_criterion, print_metrics, track_metrics, save_metrics, save_config_weights, save_patient_representation
 from prepare_models import load_initial_model_contrastive
@@ -47,6 +48,7 @@ def train_model(basepath_to_data,cnn_network_contrastive,second_cnn_network,clas
     acquired_indices = [] #indices of the unlabelled data
     acquired_labels = dict() #network labels of the unlabelled data
     
+    print(f'--{os.getcwd()}')
     dataloader,operations = load_initial_data_contrastive(basepath_to_data,phases,fraction,inferences,batch_size,modalities,acquired_indices,acquired_labels,modalities,downstream_dataset,downstream_task=downstream_task,input_perturbed=input_perturbed,perturbation=perturbation,leads=leads,class_pair=class_pair,trial=trial_to_run,nviews=nviews,labelled_fraction=labelled_fraction)
 
     """ Obtain Number of Labelled Samples """

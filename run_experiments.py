@@ -7,6 +7,7 @@ Created on Sat May 16 23:40:29 2020
 """
 
 #%%
+import os
 import numpy as np
 from prepare_miscellaneous import obtain_information, obtain_saved_weights_name, make_saving_directory_contrastive, modify_dataset_order_for_multi_task_learning, obtain_load_path_dir, determine_classification_setting
 # from prepare_network import cnn_network_contrastive, second_cnn_network
@@ -141,6 +142,7 @@ def run_configurations(basepath_to_data,phases,trial_to_load_list,trial_to_run_l
                                 continue
                             
                             classification = determine_classification_setting(second_dataset,trial_to_run)
+                            print(f'--{os.getcwd()}')
                             train_model(basepath_to_data,CLEncoder,'',classification,load_path_dir,save_path_dir,seed,batch_size,held_out_lr,fraction,modalities,leads,saved_weights,phases,original_downstream_dataset,downstream_task,class_pair,input_perturbed,perturbation,trial_to_load=trial_to_load,trial_to_run=trial_to_run,nencoders=nencoders,embedding_dim=embedding_dim,nviews=nviews,labelled_fraction=labelled_fraction,num_epochs=max_epochs)
 
 #%%
