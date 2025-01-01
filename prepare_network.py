@@ -102,7 +102,7 @@ class cnn_network_contrastive(nn.Module):
         return latent_embeddings
 
 
-class CLEncoder:
+class CLEncoder(nn.Module):
     def __init__(self, embedding_dim=320):
         super(CLEncoder,self).__init__()
         
