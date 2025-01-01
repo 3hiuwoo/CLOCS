@@ -123,7 +123,7 @@ def run_configurations(basepath_to_data,phases,trial_to_load_list,trial_to_run_l
                         leads, batch_size, held_out_lr, class_pair, modalities, fraction = obtain_information(trial_to_run,downstream_dataset,second_dataset,data2leads_dict,data2bs_dict,data2lr_dict,data2classpair_dict)
                         
                         max_epochs = 100 #hard stop for training
-                        # max_seed = 5
+                        max_seed = 1
                         # seeds = np.arange(max_seed)
                         seeds = [42]
                         for seed in seeds:
