@@ -17,8 +17,8 @@ from run_experiment import train_model
 #%%
 
 dataset_list = ['physionet','physionet2017','cardiology','ptb','fetal','physionet2016','physionet2020','chapman','chapman_pvc']#,'cipa']
-batch_size_list = [256, 256, 16, 64, 64, 256, 256, 256, 256]#, 512]
-lr_list = [1e-4, 1e-4, 1e-4, 5e-5, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4]#, 1e-4]
+batch_size_list = [256, 256, 16, 256, 64, 256, 256, 256, 256]#, 512]
+lr_list = [1e-4, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4]#, 1e-4]
 nleads = 12 # 12 | 4
 if nleads == 12:
     leads_list = [None,None,None,'i','Abdomen 1','i',"['I', 'II', 'III', 'aVL', 'aVR', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']","['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']","['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']"] #'II' for one lead, ['II','V1',etc.] for more leads

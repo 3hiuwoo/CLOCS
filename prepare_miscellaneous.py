@@ -38,9 +38,9 @@ from tabulate import tabulate
 def flatten_arrays(outputs_list,labels_list,modality_list,indices_list,task_names_list,pids_list):
     outputs_list = np.concatenate(outputs_list)
     labels_list = np.concatenate(labels_list)
-    modality_list = np.concatenate(modality_list)
-    indices_list = np.concatenate(indices_list)
-    task_names_list = np.concatenate(task_names_list)
+    modality_list = None
+    indices_list = None
+    task_names_list = None
     pids_list = np.concatenate(pids_list)
     return outputs_list, labels_list, modality_list, indices_list, task_names_list, pids_list
 
