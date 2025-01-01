@@ -67,9 +67,9 @@ def contrastive_single(phase,inference,dataloaders,model,optimizer,device,weight
 
         outputs_list.append(outputs.cpu().detach().numpy())
         labels_list.append(labels.cpu().detach().numpy())
-        modality_list.append(modality)
-        indices_list.append(indices)
-        task_names_list.append(task_names)
+        modality_list.append('')
+        indices_list.append('')
+        task_names_list.append('')
         pids_list.append(pids)
         batch_num += 1
     
