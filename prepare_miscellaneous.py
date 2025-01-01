@@ -52,8 +52,7 @@ def obtain_contrastive_loss(latent_embeddings,pids,trial):
     Outputs:
         loss (torch.Tensor): scalar NCE loss 
     """
-    if trial in ['CMSC','CMLC','CMSMLC']:
-        pids = np.array(pids,dtype=np.object)   
+    if trial in ['CMSC','CMLC','CMSMLC']:  
         pid1,pid2 = np.meshgrid(pids,pids)
         pid_matrix = pid1 + '-' + pid2
         pids_of_interest = np.unique(pids + '-' + pids) #unique combinations of pids of interest i.e. matching
