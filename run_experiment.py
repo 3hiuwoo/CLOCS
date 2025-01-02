@@ -98,12 +98,13 @@ def train_model(basepath_to_data,cnn_network_contrastive,second_cnn_network,clas
         epoch_count += 1
         if (epoch_count % 10 == 0) and ('train1' in phases):
             save_config_weights(save_path_dir,model.state_dict(),saved_weights,phases,trial_to_run,downstream_dataset)
-            
+        
         if 'train1' not in phases:
             break #from while loop
         elif 'train1' in phases and 'obtain_representation' in downstream_task:
             break
    
+    save_config_weights(save_path_dir,model.state_dict(),saved_weights,phases,trial_to_run,downstream_dataset)
     #print('Best Val Loss: %.4f.' % best_loss)
     # if 'train1' in phases:
     #     prefix = 'train_val'

@@ -219,7 +219,8 @@ def track_metrics(metrics_dict,results_dictionary,phase,epoch_count):
 def save_config_weights(save_path_dir,best_model_weights,saved_weights_name,phases,trial,downstream_dataset): #which is actually second_dataset
     if trial in ['Linear','Fine-Tuning','Random']:
         saved_weights_name = 'finetuned_weight'
-    torch.save(best_model_weights,os.path.join(save_path_dir,saved_weights_name))
+    torch.save(best_model_weights,os.path.join(save_path_dir,saved_weights_name+'.pt'))
+    print(f'weight saved in {os.path.join(save_path_dir,saved_weights_name+'.pt')}')
 
 def save_patient_representation(save_path_dir,patient_rep_dict,trial):
     if trial not in ['Linear','Fine-Tuning']:
