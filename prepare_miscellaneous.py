@@ -319,7 +319,7 @@ def obtain_load_path_dir(phases,save_path_dir,trial_to_run,second_dataset,labell
     return load_path_dir, save_path_dir
 
 def make_saving_directory_contrastive(phases,dataset_name,trial_to_load,trial_to_run,seed,max_seed,task,embedding_dim,leads,input_perturbed,perturbation,evaluation=False):
-    base_path = '/mnt/SecondaryHDD/Contrastive Learning Results' 
+    base_path = '/root/CLOCS' 
     seed_path = 'seed%i' % int(seed)
     dataset_path = dataset_name#[0] #dataset used for training
     if leads is None:
