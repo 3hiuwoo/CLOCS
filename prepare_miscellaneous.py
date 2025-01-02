@@ -86,8 +86,8 @@ def obtain_contrastive_loss(latent_embeddings,pids,trial):
             #off_diagonals = upper_triangle + lower_triangle
             diagonals = torch.diag(sim_matrix_exp)
             """ Obtain Loss Terms(s) """
-            loss_term1 = -torch.mean(torch.log(diagonals/torch.sum(sim_matrix_exp,1)))
-            loss_term2 = -torch.mean(torch.log(diagonals/torch.sum(sim_matrix_exp,0)))
+            loss_term1 = -torch.mean(torch.log((diagonals + 1e-12)/(torch.sum(sim_matrix_exp,1) + 1e-12)))
+            loss_term2 = -torch.mean(torch.log((diagonals + 1e-12)/(torch.sum(sim_matrix_exp,0) + 1e-12)))
             loss += loss_term1 + loss_term2 
             loss_terms = 2
         elif trial == 'SimCLR':
@@ -121,11 +121,11 @@ def obtain_contrastive_loss(latent_embeddings,pids,trial):
             triu_sum = torch.sum(sim_matrix_exp,1)
             tril_sum = torch.sum(sim_matrix_exp,0)
             
-            loss_diag1 = -torch.mean(torch.log(diag_elements/triu_sum))
-            loss_diag2 = -torch.mean(torch.log(diag_elements/tril_sum))
+            loss_diag1 = -torch.mean(torch.log((diag_elements+1e-12)/(triu_sum+1e-12)))
+            loss_diag2 = -torch.mean(torch.log((diag_elements+1e-12)/(tril_sum+1e-12)))
             
-            loss_triu = -torch.mean(torch.log(triu_elements/triu_sum[rows1]))
-            loss_tril = -torch.mean(torch.log(tril_elements/tril_sum[cols2]))
+            loss_triu = -torch.mean(torch.log((triu_elements+1e-12)/(triu_sum[rows1]+1e-12)))
+            loss_tril = -torch.mean(torch.log((tril_elements+1e-12)/(tril_sum[cols2]+1e-12)))
             
             loss = loss_diag1 + loss_diag2
             loss_terms = 2
